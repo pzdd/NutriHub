@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>Acesso Restrito</title>
+</h:head>
+<h:body>
+<div id="Topo" align="center">
+<h1>Nutri Hub</h1>
+</div>
+<h:form>
+<div id="container" align="center">
+<p:messages autoUpdate="true" showDetail="true"></p:messages>
+	<h:panelGrid columns="2">
+		<p:outputLabel value="Login"/>
+		<p:inputText value="#{loginMBean.login}"/>
+		
+		
+		<p:outputLabel value="Senha"/>
+		<p:password value="#{loginMBean.senha}"/>
+		
+		<h:panelGroup/>
+		
+		<p:commandButton value="Login" action="#{loginMBean.validaLogin}" styleClass="ui-priority-primary"/>
+		<br/>
+		<br/>
+		<a href="Cadastro.xhtml">Cadastro</a>
+	</h:panelGrid>
+	</div>
+</h:form>
+</h:body>
+</html>

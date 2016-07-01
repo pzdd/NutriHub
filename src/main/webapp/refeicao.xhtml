@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</h:head>
+<h:body>	
+	<div id="topo" align="center">
+		<h1>Nutri Hub</h1>
+		<br/>
+	</div>
+	<br/>
+	<h:form>
+	<p:messages autoUpdate="true" showDetail="true"/>
+	<p:dataTable emptyMessage="Nenhuma refeição cadastrada." value="#{refeicaoMBean.refeicoes}" var="refeicao" >
+		<p:column headerText="Horário: ">
+			<h:outputText value="#{refeicao.horario}" />
+		</p:column>
+		<p:column headerText="Descrição: ">
+			<h:outputText value="#{refeicao.descricao}" />
+		</p:column>
+		<p:column headerText="Substituto">
+			<h:outputText value="#{refeicao.substituto}" />
+		</p:column>
+		<p:column>
+			<p:commandButton value="Editar" onclick="PF('dlg4').show();" action="#{refeicaoMBean.refeicao}">
+				<f:setPropertyActionListener target="#{refeicaoMBean.refeicao}" value="#{refeicao}"/>
+			</p:commandButton>
+			<p:commandButton value="Remover" action="#{refeicaoMBean.remove}" update="@form">
+				<f:setPropertyActionListener target="#{refeicaoMBean.refeicao}" value="#{refeicao}"/>
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>
+		<br/>
+		<p:commandButton value="Nova refeição" onclick="PF('dlg3').show();"/>
+		<p:commandButton value="Voltar" action="#{refeicaoMBean.voltar}"/>
+	<!-- Modal para novas refeições -->	
+	<h:form id="formaux">
+	<p:dialog header="Nova Refeição" widgetVar="dlg3" height="300" width="500" modal="true">
+		<p:fieldset>
+			<table>
+				<tr>
+					<th><h:outputText value="Horário"/></th>
+					<td><p:inputMask mask="99:99" value="#{refeicaoMBean.refeicao.horario}"/></td>
+				</tr>
+				<tr>
+					<th><h:outputText value="Descrição"/></th>
+					<td><h:inputTextarea value="#{refeicaoMBean.refeicao.descricao}"></h:inputTextarea></td>
+				</tr>
+				<tr>
+					<th><h:outputText value="Substituto"/></th>
+					<td><h:inputTextarea value="#{refeicaoMBean.refeicao.substituto}"></h:inputTextarea></td>
+				</tr>
+				<tr>
+  						<td><p:commandButton value="Cadastrar" action="#{refeicaoMBean.cadastroRefeicao}" onclick="PF('dlg3').hide()" update="@all"/></td>
+  						<td><p:commandButton value="Cancelar" onclick="PF('dlg3').hide()"/></td>
+  					</tr>
+			</table>
+		</p:fieldset>
+	</p:dialog>
+	</h:form>
+	<p:dialog header="Editar Refeição" widgetVar="dlg4" height="300" width="500">
+		<p:fieldset>
+			<table>
+				<tr>
+					<th><h:outputText value="Horário"/></th>
+					<td><p:inputMask mask="99:99" value="#{refeicaoMBean.refeicao.horario}"/></td>
+				</tr>
+				<tr>
+					<th><h:outputText value="Descrição"/></th>
+					<td><h:inputTextarea value="#{refeicaoMBean.refeicao.descricao}"></h:inputTextarea></td>
+				</tr>
+				<tr>
+					<th><h:outputText value="Substituto"/></th>
+					<td><h:inputTextarea value="#{refeicaoMBean.refeicao.substituto}"></h:inputTextarea></td>
+				</tr>
+				<tr>
+  						<td><p:commandButton value="Editar" action="#{refeicaoMBean.editarRefeicao}" oncomplete="PF('dlg4').hide()" update="@all"/></td>
+  						<td><p:commandButton value="Cancelar" onclick="PF('dlg4').hide()"/></td>
+  					</tr>
+			</table>
+		</p:fieldset>
+	</p:dialog>
+	</h:form>
+</h:body>
+</html>

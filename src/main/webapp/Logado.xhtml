@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Nutri Hub</title>
+</h:head>
+<h:body>
+	<div id="topo" align="center">
+	<h1>Nutri Hub</h1>
+	<br/>
+	</div>
+	<br/>
+<h:form>
+	<h:outputLabel value="Usuário - ${USUARIOLogado.nome}"/>(<h:outputLink value="Login.xhtml">Logout</h:outputLink>)
+	<p:messages autoUpdate="true" showDetail="true"/>
+	<div id="content" align = "center">
+	 <p:commandButton value="Nova Dieta" type="button" onclick="PF('dlg1').show();" />
+	<p:dialog header="Cadastrar Dieta" widgetVar="dlg1"  modal="true" height="300" width="500">
+	<p:fieldset>
+		<table>
+			<tr>
+				<th><h:outputText value="Nome: " /></th>
+				<td><p:inputText value="#{dietaMBean.dieta.nomeDieta}"/></td>
+	   		</tr>
+	   		<tr>
+	    		<th><h:outputText value="Nome Paciente: " /></th>
+	    		<td><p:inputText value="#{dietaMBean.dieta.nomePaciente}"/></td>
+	   		</tr>
+	   		<tr>
+	   			<td><p:commandButton value="Cadastrar" action="#{dietaMBean.cadastroDieta}" onclick="PF('dlg1').hide()" update="@form"/></td>
+	   			<td><p:commandButton value="Cancelar" onclick="PF('dlg1').hide()"/></td>
+	   		</tr>
+   		</table>
+   		</p:fieldset>
+	</p:dialog>
+	<br/>
+	<p:fieldset>
+		<p:dataTable emptyMessage="Nenhuma dieta cadastrada." value="#{dietaMBean.entrySet}" var="dieta" >
+		<p:column headerText="Nome: ">
+			<h:outputText value="#{dieta.key.nomeDieta}" />
+		</p:column>
+		<p:column headerText="Nome do Paciente: ">
+			<h:outputText value="#{dieta.key.nomePaciente}" />
+		</p:column>
+		<p:column headerText="Qtd de refeições:">
+			<h:outputText value="#{ fn:length(dieta.value) }" />
+		</p:column>
+		<p:column>
+			<p:commandButton value="Abrir" action="#{refeicaoMBean.populaRefeicao}">
+				<f:setPropertyActionListener target="#{refeicaoMBean.refeicao.dieta}" value="#{dieta.key}"/>
+			</p:commandButton>
+			<p:commandButton value="Remover" action="#{dietaMBean.remove}" update="@form">
+				<f:setPropertyActionListener target="#{dietaMBean.dieta}" value="#{dieta.key}"/>
+			</p:commandButton>
+			<p:commandButton value="Download"/>
+		</p:column>
+		</p:dataTable>
+	</p:fieldset>
+	</div>
+	</h:form>
+</h:body>
+</html>
